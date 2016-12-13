@@ -14,7 +14,7 @@ board.on("ready", function() {
   });
 });
 
-var socket = io.connect('https://34.194.224.78:8081/index');
+var socket = io.connect('https://34.194.224.78:8081');
 
 socket.on('message', function (data) {
   console.log(data.msg);
