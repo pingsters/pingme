@@ -1,30 +1,16 @@
-var express = require('express');
-var app = express();
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-app.use(express.static('public'));
+server.listen(80);
 
-app.get('/index', function (req, res) {
-  res.sendFile( __dirname + "/" + "index.html" );
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/index.html');
 });
 
-var port = 8081;
-var io = require('socket.io').listen(app.listen(port));
-
-var _socket;
-
-io.sockets.on('connection', function (socket) {
-  socket.emit('message', {
-    msg: "connected bitch"
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
   });
-  _socket = socket;
-});
-
-app.listen(80, function () {
-  console.log('IoT Server listening on port 80!');
-});
-
-app.get('/rotate/:value', function(req, res) {
-  // todo: send rotate value to rasp
-  _socket.emit('rotate', {angle: res.value});
-  res.end('rotated');
 });
