@@ -10,10 +10,13 @@ app.get('/index', function (req, res) {
 var port = 8081;
 var io = require('socket.io').listen(app.listen(port));
 
+var _socket;
+
 io.sockets.on('connection', function (socket) {
   socket.emit('message', {
     msg: "connected bitch"
   });
+  _socket = socket;
 });
 
 app.listen(80, function () {
@@ -22,6 +25,6 @@ app.listen(80, function () {
 
 app.get('/rotate/:value', function(req, res) {
   // todo: send rotate value to rasp
-  io.sockets.emit('rotate', {angle: res.value});
+  _socket.emit('rotate', {angle: res.value});
   res.end('rotated');
 });

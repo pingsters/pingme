@@ -5,17 +5,16 @@ var board = new five.Board({
 });
 
 var curR = 90;
+var servo;
 
 board.on("ready", function() {
-  var servo = new five.Servo({
+  servo = new five.Servo({
     pin: 'P1-12',
     startAt: curR
   });
-  servo.sweep()	
- 
 });
 
-var socket = io.connect('https://34.194.224.78:8081');
+var socket = io.connect('https://34.194.224.78:8081/index');
 
 socket.on('message', function (data) {
   console.log(data.msg);
