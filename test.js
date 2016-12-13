@@ -14,8 +14,7 @@ board.on("ready", function() {
   });
 });
 
-var io = require('socket.io');
-var socket = io.connect('https://34.194.224.78:8081');
+var socket = require('socket.io-client')('https://34.194.224.78:8081');
 
 socket.on('message', function (data) {
   console.log(data.msg);
