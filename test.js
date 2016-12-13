@@ -16,6 +16,8 @@ board.on("ready", function() {
 
 var socket = require('socket.io-client')('https://34.194.224.78:8081');
 
+socket.on('connect', function(){console.log("connected bitch");});
+
 socket.on('message', function (data) {
   console.log(data.msg);
 });
